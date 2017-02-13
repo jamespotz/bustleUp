@@ -48,8 +48,24 @@
               color: #000;
               border-radius: 5px;
               display: inline-block;
-              margin-left: 10px;
-              margin-right: 10px;
+              margin: 20px 10px;
+          }
+
+          .floating-edit-btn{
+            background: #fff;
+            padding: 20px;
+            border-radius: 50%;
+            position: absolute;
+            right: 4px;
+            top: 58px;
+            color: #777;
+            font-size: 18px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+          }
+          
+          .floating-edit-btn:hover,
+          .floating-edit-btn:focus{
+            background: #eee;
           }
 
           .card:hover {
@@ -178,5 +194,6 @@
         </div>
 
         <script type="text/javascript" src="/js/app.js"></script>
+        @yield('custom-js')
     </body>
 </html>

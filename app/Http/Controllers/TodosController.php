@@ -72,7 +72,8 @@ class TodosController extends Controller
      */
     public function update(Request $request, Todo $todo)
     {
-        //
+        $todo->update($request->all());
+        return back()->withInput();
     }
 
     /**

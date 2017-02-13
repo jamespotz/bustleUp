@@ -11,5 +11,4 @@
 |
 */
 
-
-Route::resource('/', 'TodosController');
+Route::resource('/todos', 'TodosController');
