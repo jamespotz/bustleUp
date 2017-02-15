@@ -35,8 +35,12 @@ class TodosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         //
+        $this->validate($request, [
+                'title' => 'required|max:150',
+                'description' => 'required'
+            ]);
         $todo = Todo::create($request->all());
         return back()->withInput();
     }
@@ -85,5 +89,7 @@ class TodosController extends Controller
     public function destroy(Todo $todo)
     {
         //
+        $todo->delete();
+        return "Todo deleted!";
     }
 }

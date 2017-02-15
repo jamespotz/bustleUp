@@ -20,7 +20,7 @@
 			  <div class="card-block" id="card{{ $todo->id }}">
 			  	<input type="checkbox" class="star" checked="false">
 				  	<a href="#" class="small" style="color: #222; font-size: 12px;" alt="edit" id="editTodo-{{ $todo->id }}" data-target-id="{{ $todo->id }}">
-				  		<i class="glyphicon glyphicon-pencil floating-edit-btn"></i>
+				  		<i class="glyphicon glyphicon-edit floating-edit-btn"></i>
 				  	</a>
 			  	<h4 class="card-title" id="title{{ $todo->id }}">
 			  		{{ $todo->title }}
@@ -30,7 +30,7 @@
 			  <div class="card-container">
 			    <p class="card-description" id="description{{ $todo->id }}">{{ $todo->description }}</p>
 			    <div class="card-footer">
-			    	<a href="" class="btn btn-lg btn-teal btn-raised btn-ripple">Complete Now</a>
+			    	<a href="" class="btn btn-lg btn-teal btn-raised btn-ripple">Done</a>
 			    </div>
 			  </div>
 			</div>
@@ -56,7 +56,7 @@
 			      			<textarea class="form-control" rows="3" name="description" id="todoDescription"></textarea>
 			      		</div>
 			      		<div class="form-group">
-						    <button type="submit" class="btn btn-lg btn-raised btn-blue btn-ripple">Create your todo</button>
+						    <button type="submit" class="btn btn-lg btn-raised btn-blue btn-ripple">Save</button>
 						</div>
 			      	</form>
 		      	</div>
@@ -85,7 +85,8 @@
 			      			<textarea class="form-control" rows="3" name="description" id="todoDescription"></textarea>
 			      		</div>
 			      		<div class="form-group">
-						    <button type="submit" class="btn btn-lg btn-raised btn-blue btn-ripple">Update your todo</button>
+						    <button type="submit" class="btn btn-lg btn-raised btn-blue btn-ripple">Update</button>
+						    <a href="#" class="btn btn-lg btn-raised btn-white btn-ripple" id="destroyTodo" style="margin-left: 10px;">Delete</a>
 						</div>
 			      	</form>
 		      	</div>
@@ -112,9 +113,26 @@
 				var title = $('#title' + targetCardId).html();
 				var description = $('#description' + targetCardId).html();
 				$('#edit-form').attr('action', '/todos/' + targetCardId);
+				$('#destroyTodo').attr('data-delete-id', targetCardId);
 				$('#edit-form input[name="title"]').val(title.trim());
 				$('#edit-form textarea[name="description"]').val(description);
 				$('#edit-modal').modal('show');
+			});
+
+			$('#destroyTodo').click(function(e){
+				e.preventDefault();
+				var deleteTodoId = $(this).data('delete-id');
+				$.ajax({
+					url: '/todos/' + deleteTodoId,
+					type: 'DELETE',
+					headers: {
+				        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				    }
+				}).done(function(message){
+					if(message == 'Success'){
+						location.reload();
+					}
+				});
 			});
 		});
 	</script>
